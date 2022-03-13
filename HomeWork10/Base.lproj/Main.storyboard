@@ -89,6 +89,11 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Main Screen" id="vKn-1F-GBO"/>
+                    <connections>
+                        <outlet property="endlessView" destination="9Kd-6G-2md" id="0qJ-a8-jAV"/>
+                        <outlet property="pulseView" destination="fNf-Ev-l9l" id="COi-21-TlB"/>
+                        <outlet property="viewButtons" destination="eNw-0a-7pv" id="Cov-oT-bNI"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>

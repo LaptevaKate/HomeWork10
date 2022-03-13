@@ -9,9 +9,18 @@ import UIKit
 
 class MainViewController: UIViewController {
 
+    
+    @IBOutlet weak var viewButtons: UIView!
+    @IBOutlet weak var pulseView: UIImageView!
+    @IBOutlet weak var endlessView: UIImageView!
+    
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-      
+        viewButtons.layer.cornerRadius = 50
+        pulseView.layer.cornerRadius = 50
+        endlessView.layer.cornerRadius = 50
     }
 
 
