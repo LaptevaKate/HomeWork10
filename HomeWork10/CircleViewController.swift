@@ -11,53 +11,55 @@ class CircleViewController: UIViewController {
     
     private let sizeConst: CGFloat = 60
     
-    var circlelabel: UILabel!
+    @IBOutlet weak var startButton: UIButton!
+    
+    var circleLabel: UILabel!
     var isMoving = false
+    let attrStart = NSAttributedString(string: "START", attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 34)])
+    let attrStop = NSAttributedString(string: "STOP", attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 34)])
     
     //MARK: - ViewDidLoad
     
     override func viewDidLoad() {
         super.viewDidLoad()
         initLabel()
+        startButton.setAttributedTitle(attrStart, for: .normal)
     }
     
     //MARK: - Methods
     
     func initLabel() {
-        circlelabel = UILabel()
-        circlelabel.frame.size = CGSize(width: sizeConst, height: sizeConst)
-        circlelabel.layer.cornerRadius = sizeConst / 2
-        circlelabel.backgroundColor = .white
-        circlelabel.layer.masksToBounds = true
-        circlelabel.center.x = view.center.x - 100
-        circlelabel.center.y = view.center.y - 50
-        self.view.addSubview(circlelabel)
+        circleLabel = UILabel()
+        circleLabel.frame.size = CGSize(width: sizeConst, height: sizeConst)
+        circleLabel.layer.cornerRadius = sizeConst / 2
+        circleLabel.backgroundColor = .white
+        circleLabel.layer.masksToBounds = true
+        circleLabel.center.x = view.center.x - 100
+        circleLabel.center.y = view.center.y - 50
+        self.view.addSubview(circleLabel)
     }
     
-    //MARK: - IBActions
-    
-    @IBAction func startCircleToMove(_ sender: UIButton) {
-        
+    func animateCircle() {
         UIView.animate(withDuration: 0.5,
                        animations: {
-            self.circlelabel.center.x += 200.0
+            self.circleLabel.center.x += 200.0
         },
-                       completion: { _ in
+                       completion: { [weak self] _ in
             UIView.animate(withDuration: 0.5,
                            animations: {
-                self.circlelabel.center.y += 100.0
+                self?.circleLabel.center.y += 100.0
             },
                            completion: { _ in
                 UIView.animate(withDuration: 0.5,
                                animations: {
-                    self.circlelabel.center.x -= 200.0
+                    self?.circleLabel.center.x -= 200.0
                 },
-                               completion: { _ in
+                               completion: { [weak self] _ in
                     UIView.animate(withDuration: 0.5,
                                    animations: {
-                        self.circlelabel.center.y -= 100.0
-                    }, completion: { _ in
-                        self.startCircleToMove(sender)
+                        self?.circleLabel.center.y -= 100.0
+                    }, completion: { [weak self] _ in
+                        self?.isMoving == false ? self?.initialState() : self?.animateCircle()
                     }
                     )
                 }
@@ -66,5 +68,23 @@ class CircleViewController: UIViewController {
             )
         }
         )
+    }
+    
+    func initialState() {
+        circleLabel.layer.removeAllAnimations()
+        circleLabel.center.x = view.center.x - 100
+        circleLabel.center.y = view.center.y - 50
+    }
+    
+    //MARK: - IBActions
+    
+    @IBAction func startCircleToMove(_ sender: UIButton) {
+        isMoving.toggle()
+        if isMoving {
+            startButton.setAttributedTitle(attrStop, for: .normal)
+            animateCircle()
+        } else {
+            startButton.setAttributedTitle(attrStart, for: .normal)
+        }
     }
 }
