@@ -16,7 +16,7 @@ final class PulseViewController: UIViewController {
     @IBOutlet private weak var heartImageView: UIImageView!
     
     @IBOutlet private weak var imageHeight: NSLayoutConstraint!
-    @IBOutlet weak var imageWidth: NSLayoutConstraint!
+    @IBOutlet private weak var imageWidth: NSLayoutConstraint!
     
     
     
